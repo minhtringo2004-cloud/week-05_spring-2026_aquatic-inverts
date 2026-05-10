@@ -303,3 +303,22 @@ salinity/(copepods_plot+ostracods_plot)
 - color: taxon
 - geometry: geom_point()
 - facets: facet_Wrap(~taxon, scales="free")
+
+## B: Wrangle Data
+```{r}
+#| label: cleaning-aq-ins_clean
+
+# creating new clean object from aquatic inverts
+ab_salinity <- aq_ins_clean |> 
+  # log transform mean abundance per liter
+  mutate(log_ave_lit = log(ave_lit+1),
+         # convert taxon to title
+         taxon = to_any_case(taxon, case = "title"),
+         # order taxon levels by abudance
+         taxon = fct_reorder(taxon, ave_lit, .fun="max"))
+
+#display 10 random rows
+slice_sample(ab_salinity, n = 10)
+
+```
+
