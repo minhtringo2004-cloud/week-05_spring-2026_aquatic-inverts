@@ -43,6 +43,7 @@ library(patchwork)
 
 ```{r}
 #| label: data
+#| echo: false
 
 # taxonomic information
 taxon_list <- read_csv(here("data", "taxon_list.csv")) 
@@ -59,37 +60,20 @@ sites <- read_xlsx(here("data", "Aquatic Sampling Data-2026-03-10.xlsx"),
 water_quality <- read_xlsx(here("data", "Aquatic Sampling Data-2026-03-10.xlsx"),
                            sheet = "Water Quality",
                            na = c("", "n/a", "N/A", "over", "173+")) 
-```
 
-# 2. Cleaning
-
-## `sites` object
-
-```{r}
-#| label: ncos-site-object
 
 # creating new object from sites
 ncos_sites <- sites |> 
   # filter to only include NCOS sites sampled four times a year
   filter(sector == "NCOS" & sampling_frequency == "Quarterly")
-```
 
-## Cleaning `taxon_list`
 
-```{r}
-#| label: cleaning-taxon-list
 
 # creating new clean object from taxon_list
 taxon_list_clean <- taxon_list |> 
   # converting taxon name to snake case (no spaces or capital letters,
   # only underscores)
   mutate(verbatim_name = to_any_case(verbatim_name, case = "snake"))
-```
-
-## Cleaning `water_quality`
-
-```{r}
-#| label: water-quality-cleaning
 
 # creating new clean object from water quality
 water_quality_clean <- water_quality |> 
@@ -109,12 +93,7 @@ water_quality_clean <- water_quality |>
   ungroup() |> 
   # filter out salinity outliers
   filter(date_site != "2022-08-12_NVBR") 
-```
 
-## Cleaning `aq_ins`
-
-```{r}
-#| label: cleaning-aq-ins
 
 # creating new clean object from aquatic inverts
 aq_ins_clean <- aq_ins |> 
@@ -167,8 +146,8 @@ aq_ins_clean <- aq_ins |>
   # setting factor levels for site
   mutate(site_full = fct_reorder(site_full, med_sal, .fun = "median", .na_rm = TRUE),
          site_full = fct_rev(site_full))
-```
 
+```
 
 
 # Question 1
@@ -180,7 +159,15 @@ aq_ins_clean <- aq_ins |>
 - geometry abundance: geom_jitter()
 - geometry median: stat_summary()
 
-## B:  
+## B:  Wrangle Data
+
+```{r}
+aq_ins_mod <- aq_ins_clean |> 
+  # filter to only include copepods
+  filter(taxon == "ostracod") |> 
+  # log + 1 transform mean abundance per liter
+  mutate(log_ave_lit = log(ave_lit + 1))
+```
 
 
 
