@@ -173,5 +173,39 @@ ostracod <- aq_ins_clean |>
 slice_sample(ostracod, n=10)
 ```
 
+## C: Code Figure
+
+```{r}
+#| label: visualizing-ostracods
+#| fig-width: 10
+#| fig-height: 6
+
+# base layer
+ostracods_plot <- ggplot(data = ostracod,
+                   # x-axis: site
+                   # y-axis: mean abundance/L
+                   mapping = aes(x = site_full,
+                                 y = log_ave_lit)) +
+  # first layer: points to represent observations
+  geom_jitter(height = 0,
+              shape = 21,
+              width = 0.1) +
+  # second layer: points to represent medians
+  stat_summary(geom = "point",
+               fun = "median",
+               size = 4,
+               color = "blue") +
+  # wrapping x-axis text
+  scale_x_discrete(labels = label_wrap(15)) +
+  # relabelling x- and y-axis, adding title
+  labs(x = "Site",
+       y = "log + 1 transformed average abundance/L",
+       title = "Ostracods") +
+  # different theme
+  theme_bw()
+
+# displaying object
+ostracods_plot
+```
 
 
