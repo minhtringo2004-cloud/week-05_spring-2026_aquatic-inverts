@@ -292,3 +292,14 @@ ostracods_plot
 salinity/(copepods_plot+ostracods_plot)
 ```
 
+## E: Analysis
+
+
+# Question 2
+
+## A: Planning
+- x axis: salinity
+- y axis: log transformed abundance
+- color: taxon
+- geometry: geom_point()
+- facets: facet_Wrap(~taxon, scales="free")
