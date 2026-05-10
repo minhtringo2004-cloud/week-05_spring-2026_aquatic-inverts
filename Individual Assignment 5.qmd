@@ -162,11 +162,15 @@ aq_ins_clean <- aq_ins |>
 ## B:  Wrangle Data
 
 ```{r}
-aq_ins_mod <- aq_ins_clean |> 
-  # filter to only include copepods
+#new object from aq_ins_clean
+ostracod <- aq_ins_clean |> 
+  # filter to only include ostracod
   filter(taxon == "ostracod") |> 
   # log + 1 transform mean abundance per liter
   mutate(log_ave_lit = log(ave_lit + 1))
+
+# display 10 random rows
+slice_sample(ostracod, n=10)
 ```
 
 
