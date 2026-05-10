@@ -147,7 +147,81 @@ aq_ins_clean <- aq_ins |>
   mutate(site_full = fct_reorder(site_full, med_sal, .fun = "median", .na_rm = TRUE),
          site_full = fct_rev(site_full))
 
+# creating new object from clean aquatic inverts 
+copepods_df <- aq_ins_clean |> 
+  # filter to only include copepods
+  filter(taxon == "copepod") |> 
+  # log + 1 transform mean abundance per liter
+  mutate(log_ave_lit = log(ave_lit + 1)) 
+
 ```
+
+# Importing other graphs
+```{r}
+#| label: visualizing-salinity
+#| fig-width: 8
+#| fig-height: 6
+
+# base layer
+salinity <- ggplot(data = aq_ins_clean,
+       # x-axis: site
+       # y-axis: mean salinity
+       mapping = aes(x = site_full,
+                     y = med_sal)) +
+  # first layer: salinity measurements at each survey
+  geom_jitter(height = 0,
+              width = 0.1,
+              shape = 21) +
+  # wrapping x-axis text
+  scale_x_discrete(labels = label_wrap(width = 15)) +
+  # second layer: points to represent means
+  stat_summary(fun = median,
+               color = "red",
+               size = 1) +
+  # relabelling x- and y-axes
+  labs(x = "Site",
+       y = "Median salinity (ppt)",
+       title = "Site salinity") +
+  # different theme
+  theme_bw()
+
+# displaying object
+salinity
+```
+
+```{r}
+#| label: visualizing-copepods
+#| fig-width: 10
+#| fig-height: 6
+
+# base layer
+copepods_plot <- ggplot(data = copepods_df,
+                   # x-axis: site
+                   # y-axis: mean abundance/L
+                   mapping = aes(x = site_full,
+                                 y = log_ave_lit)) +
+  # first layer: points to represent observations
+  geom_jitter(height = 0,
+              shape = 21,
+              width = 0.1) +
+  # second layer: points to represent medians
+  stat_summary(geom = "point",
+               fun = "median",
+               size = 4,
+               color = "blue") +
+  # wrapping x-axis text
+  scale_x_discrete(labels = label_wrap(15)) +
+  # relabelling x- and y-axis, adding title
+  labs(x = "Site",
+       y = "log + 1 transformed average abundance/L",
+       title = "Copepods") +
+  # different theme
+  theme_bw()
+
+# displaying object
+copepods_plot
+```
+
 
 
 # Question 1
@@ -208,4 +282,13 @@ ostracods_plot <- ggplot(data = ostracod,
 ostracods_plot
 ```
 
+## D: create multipanel figure
+```{r}
+#| label: multipanel figure
+#| fig-width: 14
+#| fig-height: 10
+
+#combining plots
+salinity/(copepods_plot+ostracods_plot)
+```
 
