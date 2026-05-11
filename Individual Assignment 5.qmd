@@ -282,7 +282,7 @@ ostracods_plot <- ggplot(data = ostracod,
 ostracods_plot
 ```
 
-## D: create multipanel figure
+## D: Create multipanel figure
 ```{r}
 #| label: multipanel figure
 #| fig-width: 14
@@ -293,7 +293,21 @@ salinity/(copepods_plot+ostracods_plot)
 ```
 
 ## E: Analysis
+In 1-2 sentences each, describe:
 
+differences between sites in copepod and ostracod abundance
+how ostracod abundance may relate (or not) to site-level differences in salinity
+Be specific using the visual components of the plot.
+
+- The differences in sites between copepods and ostracod abundance are mainly 
+at the South of Phelps Bridge as ostracods are the most abundant here while 
+copepods are more abundant South of Venoco Bridge.
+- Ostracod abundance may not be related to site-level differences as there are 
+numerous occassions of median salinity being relatively low at places like
+Phelps Bridge or Phelps road, yet South of Phelps Bridge sites have high
+abundance while the North side doesn't. Additionally,low abundance sites like 
+North of Phelps have the same abundance as high salinity sites like Venoco 
+Bridge.
 
 # Question 2
 
@@ -322,3 +336,35 @@ slice_sample(ab_salinity, n = 10)
 
 ```
 
+## C: Code figure
+```{r}
+#| label: visualizing-abundance salinity
+#| fig-width: 10
+#| fig-height: 6
+
+# base layer
+ggplot(data = ostracod,
+       # x-axis: site
+       # # y-axis: mean abundance/L
+                   mapping = aes(x = med_sal,
+                                 y = log_ave_lit,
+                                 color = taxon)) +
+  # layer 1: points to represent observations
+  geom_point(alpha = 0.7) +
+  #facet wrap for taxon 
+  facet_wrap(~ taxon,
+             scales = "free") +
+  # use color palette 
+  scale_color_viridis_d() +
+  # labels
+  labs( x = "Median Salinity (ppt)",
+        y = "Log transformed average abundance/L") +
+  # theme
+  theme_bw()+
+  # remove legend from theme
+  theme(legend.position = "none")
+                   
+```
+
+## D: Analysis
+In 3-5 sentences, describe differences or similarities between taxa in relationships between abundance and salinity. Be specific using the visual components of the plot.
