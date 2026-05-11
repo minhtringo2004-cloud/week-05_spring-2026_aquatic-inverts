@@ -293,12 +293,6 @@ salinity/(copepods_plot+ostracods_plot)
 ```
 
 ## E: Analysis
-In 1-2 sentences each, describe:
-
-differences between sites in copepod and ostracod abundance
-how ostracod abundance may relate (or not) to site-level differences in salinity
-Be specific using the visual components of the plot.
-
 - The differences in sites between copepods and ostracod abundance are mainly 
 at the South of Phelps Bridge as ostracods are the most abundant here while 
 copepods are more abundant South of Venoco Bridge.
@@ -343,7 +337,7 @@ slice_sample(ab_salinity, n = 10)
 #| fig-height: 6
 
 # base layer
-ggplot(data = ostracod,
+ggplot(data = ab_salinity,
        # x-axis: site
        # # y-axis: mean abundance/L
                    mapping = aes(x = med_sal,
@@ -367,4 +361,12 @@ ggplot(data = ostracod,
 ```
 
 ## D: Analysis
-In 3-5 sentences, describe differences or similarities between taxa in relationships between abundance and salinity. Be specific using the visual components of the plot.
+
+- The differences between taxa in relationships between abundance and salinity 
+is that the higher the salinity, the lower the average abundance. However, this
+isn't the case with all species as Copepods are abundant at high and low 
+salinities, similar to Hemiptera as both show up to 2.5 log average abundance/L
+in higher salinities. On the other hand, species like  Annelida Oligochaete, 
+along with the majority of the species, follow an exponential decrease as 
+salinity increases. This includes Cladocera and Diptera Chrionomid to name a 
+few.
