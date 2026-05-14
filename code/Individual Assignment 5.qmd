@@ -157,12 +157,10 @@ copepods_df <- aq_ins_clean |>
 
 ```
 
-# Importing other graphs
+
 ```{r}
-#| label: visualizing-salinity
-#| fig-width: 8
-#| fig-height: 6
 #| echo: false
+#| label: importing graphs
 
 # base layer
 salinity <- ggplot(data = aq_ins_clean,
@@ -187,12 +185,11 @@ salinity <- ggplot(data = aq_ins_clean,
   # different theme
   theme_bw()
 
-# displaying object
-salinity
 ```
 
 ```{r}
-#| label: visualizing-copepods
+#| echo: false
+#| label: importing other graphs
 #| fig-width: 10
 #| fig-height: 6
 
@@ -220,8 +217,6 @@ copepods_plot <- ggplot(data = copepods_df,
   # different theme
   theme_bw()
 
-# displaying object
-copepods_plot
 ```
 
 
