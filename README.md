@@ -24,7 +24,10 @@ library(patchwork)
 ├── README.md
 ├── code                                          
 │   ├── week-05_in-class-KEY.pdf                  # key (comes with repo)
-│   └── week-05_in-class-KEY.qmd
+│   ├── week-05_in-class-KEY.qmd
+│   ├── in class template.qmd                     # in class template
+│   ├── Individual Assignment 5.qmd               # Individual Assignment 5
+│   └── Individual Assignment 5.pdf               # Individual Assignment 5 PDF
 ├── data
 │   ├── Aquatic Sampling Data-2026-03-10.xlsx     # invertebrate survey data
 │   └── taxon_list.csv                            # taxonomic information
